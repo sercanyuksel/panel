@@ -21,7 +21,33 @@
         </div>
         </div>	
         ';
-    header("Refresh:2; url=index.php");
+        switch($_SESSION['authority'])
+        {
+            case 1;
+            header("Refresh:2; url=admin");
+            break;
+            
+            case 2;
+            header("Refresh:2; url=director");
+            break;
+            
+            case 3;
+            header("Refresh:2; url=it");
+            break;
+
+            case 4;
+            header("Refresh:2; url=camera");
+            break;
+
+            case 5;
+            header("Refresh:2; url=solver");
+            break;
+
+            case 6;
+            header("Refresh:2; url=secreatery");
+            break;
+
+        }
     }
     else
     {
