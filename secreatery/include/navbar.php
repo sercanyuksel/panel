@@ -8,15 +8,6 @@
                 <a class="nav-link" href="#">Anasayfa</a>
             </li>
             <li class="nav-item px-3">
-                <a class="nav-link" href="#">Araçlar</a>
-            </li>
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Talepler</a>
-            </li>
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Arızalar</a>
-            </li>
-            <li class="nav-item px-3">
                 <a class="nav-link" href="#">Evrak Kayıt</a>
             </li>
             <li class="nav-item px-3">

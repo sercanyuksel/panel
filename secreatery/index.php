@@ -3,7 +3,7 @@
  header("content-type: text/html; charset=utf-8");
  require('include/ayar.php');
  session_start();
-if(!$_SESSION['user']||$_SESSION['authority']!=1)
+if(!$_SESSION['user']||$_SESSION['authority']!=6)
 {
     header('Location:../');
 }
@@ -72,9 +72,18 @@ switch($page){
     include 'soforler/sofor-duzenle.php';
     break;
 
-    default;
-    include 'talepler/talepler.php';
+    case 'evrak-ekle';
+    include 'evraklar/evrak-ekle.php';
     break;
+
+    case 'evraklar';
+    include 'evraklar/evraklar.php';
+    break;
+
+    default;
+    include 'evraklar/evraklar.php';
+    break;
+    
     }
 ?>    
         </main>

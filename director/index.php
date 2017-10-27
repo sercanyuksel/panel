@@ -72,6 +72,14 @@ switch($page){
     include 'soforler/sofor-duzenle.php';
     break;
 
+    case 'araclar';
+    include 'araclar/araclar.php';
+    break;
+
+    case 'arizalar';
+    include 'arizalar/arizalar.php';
+    break;
+
     default;
     include 'talepler/talepler.php';
     break;

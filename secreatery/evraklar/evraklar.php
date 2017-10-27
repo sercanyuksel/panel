@@ -1,33 +1,38 @@
+<?php
+$documents=$conn->query("SELECT * FROM documents",PDO::FETCH_ASSOC);
+                                                                                             
+?>
 <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <i class="fa fa-align-justify"></i> Talepler
+                                    <i class="fa fa-align-justify"></i> Evraklar
                                 </div>
                                 <div class="card-body">
                                     <table class="table table-bordered table-striped table-sm">
                                         <thead>
                                             <tr>
-                                                <th>Arıza No</th>
-                                                <th>Araç No</th>
-                                                <th>Arıza Tipi</th>
-                                                <th>Arıza Başlığı</th>
-                                                <th>Şöför</th>
-                                                <th>Arıza Tarihi</th>
-                                                <th>İşlemler</th>
+                                                <th>Kayıt No</th>
+                                                <th>Gönderilen Kişi/Kurum</th>
+                                                <th>Tarih</th>
+                                                <th>Dosya</th>
+                                                <th>Konusu</th>
+                                                <th>Dosya Numarası</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <?php foreach($documents as $document){?>
                                            <tr>
-                                                <td><a href="index.php?islem=talep-duzenle">#1252</a></td>
-                                                <td>521</td>
-                                                <td>Kamera Arızası</td>
-                                                <td>Orta Kamera'da Sorun</td>
-                                                <td>Ali Veli</td>
-                                                <td>10/10/2017</td>
-                                                <td class="text-center"><a href="index.php?islem=talep-duzenle" title="incele"><i class="icon-magnifier"></i></a></td>
+                                                <td><?=$document['id']?></td>
+                                                <td><?=$document['sending']?></td>
+                                                <td><?=$document['date']?></td>
+                                                <td><?=$document['addition']?></td>
+                                                <td><?=$document['subject']?></td>
+                                                <td><?=$document['file_no']?></td>
+                        
                                            </tr>
+                                        <?php } ?>
                                         </tbody>
                                     </table>
                                     <nav>
