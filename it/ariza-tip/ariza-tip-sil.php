@@ -16,11 +16,11 @@
         </div>
         	
         ';
-     header("Refresh:2; url=index.php?islem=soforler");
+     header("Refresh:2; url=index.php?islem=ariza-tipleri");
     }
     else
     {
-        $sth=$conn->prepare("DELETE from drivers WHERE id=?");
+        $sth=$conn->prepare("DELETE from troubles WHERE id=?");
         $sth=$sth->execute(array(
             $id
         ));
@@ -31,14 +31,14 @@
               <div class="row justify-content-center">
               <div class="col-md-12">
               <div class="alert alert-success" style="padding:60px;">
-              <h1><i class="fa fa-check-circle-o"></i> Şöför Silme Başarılı .</h1><br/>
+              <h1><i class="fa fa-check-circle-o"></i> Arıza Tipi Silme Başarılı .</h1><br/>
               Yönlendiriliyorsunuz...
               </div>
               </div>
               </div>
                   
               ';
-           header("Refresh:2; url=index.php?islem=soforler");
+           header("Refresh:2; url=index.php?islem=ariza-tipleri");
         }
         else
         {
@@ -54,7 +54,7 @@
               </div>
                   
               ';
-           header("Refresh:2; url=index.php?islem=soforler");
+           header("Refresh:2; url=index.php?islem=ariza-tipleri");
         }
     }
     

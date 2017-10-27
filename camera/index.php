@@ -3,7 +3,7 @@
  header("content-type: text/html; charset=utf-8");
  require('include/ayar.php');
  session_start();
-if(!$_SESSION['user']||$_SESSION['authority']!=1)
+if(!$_SESSION['user']||$_SESSION['authority']!=4)
 {
     header('Location:../');
 }
@@ -56,22 +56,39 @@ switch($page){
     include 'talepler/talep-duzenle.php';
     break;
 
-    case 'soforler';
-    include 'soforler/soforler.php';
+    case 'arizalar';
+    include 'arizalar/arizalar.php';
     break;
     
-    case 'sofor-ekle';
-    include 'soforler/sofor-ekle.php';
+    case 'ariza-ekle';
+    include 'arizalar/ariza-ekle.php';
     break;
 
-    case 'sofor-sil';
-    include 'soforler/sofor-sil.php';
+    case 'ariza-sil';
+    include 'arizalar/ariza-sil.php';
     break;
     
-    case 'sofor-duzenle';
-    include 'soforler/sofor-duzenle.php';
+    case 'ariza-duzenle';
+    include 'arizalar/ariza-duzenle.php';
     break;
 
+    case 'araclar';
+    include 'araclar/araclar.php';
+    break;
+    
+    case 'arac-ekle';
+    include 'araclar/arac-ekle.php';
+    break;
+
+    case 'arac-sil';
+    include 'araclar/arac-sil.php';
+    break;
+    
+    case 'arac-duzenle';
+    include 'araclar/arac-duzenle.php';
+    break;
+
+ 
     default;
     include 'talepler/talepler.php';
     break;
