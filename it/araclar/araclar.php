@@ -22,7 +22,7 @@ $areas=$conn->query("SELECT * from area",PDO::FETCH_ASSOC);
                                            <tr>
                                                 <td><a href="index.php?islem=bolge-duzenle&id=<?=$area['id']?>"><?=$area['code']?></a></td>
                                                 <td><?=$area['name']?></td>
-                                                <td class="text-center"><a href="index.php?islem=bolge-duzenle&id=<?=$area['id']?>" title="incele"><i class="icon-magnifier"></i></a>| <a id="delete" href="index.php?islem=bolge-sil&id=<?=$area['id']?>" title="Sil"><i class="icon-close"></i></a></td>
+                                                <td class="text-center"><a href="index.php?islem=bolge-duzenle&id=<?=$area['id']?>" title="incele"><i class="icon-magnifier"></i></a></td>
                                            </tr>
                                         <?php } ?>
                                         </tbody>
