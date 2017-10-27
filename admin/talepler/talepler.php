@@ -1,3 +1,8 @@
+<?php
+$sth=$conn->prepare("SELECT * from requests ORDER BY id DESC");
+$sth->execute();
+$requests=$sth->fetchAll();
+?>
 <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
@@ -9,25 +14,44 @@
                                     <table class="table table-bordered table-striped table-sm">
                                         <thead>
                                             <tr>
-                                                <th>Arıza No</th>
-                                                <th>Araç No</th>
-                                                <th>Arıza Tipi</th>
-                                                <th>Arıza Başlığı</th>
-                                                <th>Şöför</th>
-                                                <th>Arıza Tarihi</th>
+                                                <th>Talep No</th>
+                                                <th>Araç Kodu</th>
+                                                <th>Talebi Açan</th>
+                                                <th>Talebi Üstlenen</th>
+                                                <th>Açılma Tarihi</th>
+                                                <th>Durumu</th>
                                                 <th>İşlemler</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           <tr>
-                                                <td><a href="index.php?islem=talep-duzenle">#1252</a></td>
-                                                <td>521</td>
-                                                <td>Kamera Arızası</td>
-                                                <td>Orta Kamera'da Sorun</td>
-                                                <td>Ali Veli</td>
-                                                <td>10/10/2017</td>
+                                          
+                                           <?php foreach($requests as $request){
+                                            $oDate = new DateTime($request['created_at']);
+                                            $create_date = $oDate->format("d-m-Y H:i:s");
+                                            $sth=$conn->prepare("SELECT * from users WHERE id=?");
+                                            $sth->execute(array($request['creator_id']));   
+                                            $creator=$sth->fetch(PDO::FETCH_ASSOC);
+                                            $exist=false;
+                                            if($request['handler_id']!=0)
+                                            {
+                                             $exist=true;
+                                             $sth->execute(array($request['handler_id']));
+                                             $handler=$sth->fetch(PDO::FETCH_ASSOC);                                                   
+                                            }
+                                            $sth=$conn->prepare("SELECT * from cars WHERE id=?");
+                                            $sth->execute(array($request['car_id']));
+                                            $car=$sth->fetch(PDO::FETCH_ASSOC);
+                                            ?>
+                                                 <tr>
+                                                <td><a href="index.php?islem=talep-duzenle">#<?=$request['id']?></a></td>
+                                                <td><?=$car['code']?></td>
+                                                <td><?=$creator['name']?> <?=$creator['surname']?></td>
+                                                <td><?php if($exist){echo $handler['name'].' '.$handler['surname'];} else{echo 'Henüz Talep Üstlenilmedi.';}?></td>
+                                                <td><?=$create_date?></td>
+                                                <td><?=$request['status']?></td>
                                                 <td class="text-center"><a href="index.php?islem=talep-duzenle" title="incele"><i class="icon-magnifier"></i></a></td>
-                                           </tr>
+                                                </tr>
+                                           <?php } ?>
                                         </tbody>
                                     </table>
                                     <nav>

@@ -40,6 +40,74 @@ if(!$_SESSION['user']||$_SESSION['authority']!=1)
 
 switch($page){
     
+    case 'araclar';
+    include 'araclar/araclar.php';
+    break;
+    
+    case 'arac-ekle';
+    include 'araclar/arac-ekle.php';
+    break;
+
+    case 'arac-kamera';
+    include 'araclar/arac-kamera.php';
+    break;
+
+    case 'arac-sil';
+    include 'araclar/arac-sil.php';
+    break;
+    
+    case 'arac-duzenle';
+    include 'araclar/arac-duzenle.php';
+    break;
+
+    case 'bolgeler';
+    include 'bolgeler/bolgeler.php';
+    break;
+    
+    case 'bolge-ekle';
+    include 'bolgeler/bolge-ekle.php';
+    break;
+
+    case 'bolge-sil';
+    include 'bolgeler/bolge-sil.php';
+    break;
+    
+    case 'bolge-duzenle';
+    include 'bolgeler/bolge-duzenle.php';
+    break;
+
+    case 'markalar';
+    include 'markalar/markalar.php';
+    break;
+    
+    case 'marka-ekle';
+    include 'markalar/marka-ekle.php';
+    break;
+
+    case 'marka-sil';
+    include 'markalar/marka-sil.php';
+    break;
+    
+    case 'marka-duzenle';
+    include 'markalar/marka-duzenle.php';
+    break;
+
+    case 'kameralar';
+    include 'kameralar/kameralar.php';
+    break;
+    
+    case 'kamera-ekle';
+    include 'kameralar/kamera-ekle.php';
+    break;
+
+    case 'kamera-sil';
+    include 'kameralar/kamera-sil.php';
+    break;
+    
+    case 'kamera-duzenle';
+    include 'kameralar/kamera-duzenle.php';
+    break;
+
     case 'talepler';
     include 'talepler/talepler.php';
     break;
@@ -70,6 +138,22 @@ switch($page){
     
     case 'sofor-duzenle';
     include 'soforler/sofor-duzenle.php';
+    break;
+
+    case 'ariza-tipleri';
+    include 'ariza-tip/ariza-tipleri.php';
+    break;
+    
+    case 'ariza-tip-ekle';
+    include 'ariza-tip/ariza-tip-ekle.php';
+    break;
+
+    case 'ariza-tip-sil';
+    include 'ariza-tip/ariza-tip-sil.php';
+    break;
+    
+    case 'ariza-tip-duzenle';
+    include 'ariza-tip/ariza-tip-duzenle.php';
     break;
 
     default;
