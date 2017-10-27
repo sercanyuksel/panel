@@ -3,7 +3,7 @@
  header("content-type: text/html; charset=utf-8");
  require('include/ayar.php');
  session_start();
-if(!$_SESSION['user']||$_SESSION['authority']!=1)
+if(!$_SESSION['user']||$_SESSION['authority']!=2)
 {
     header('Location:../');
 }
