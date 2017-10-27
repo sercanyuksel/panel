@@ -3,7 +3,7 @@
  header("content-type: text/html; charset=utf-8");
  require('include/ayar.php');
  session_start();
-if(!$_SESSION['user']||$_SESSION['authority']!=1)
+if(!$_SESSION['user']||$_SESSION['authority']!=2)
 {
     header('Location:../');
 }
@@ -70,6 +70,14 @@ switch($page){
     
     case 'sofor-duzenle';
     include 'soforler/sofor-duzenle.php';
+    break;
+
+    case 'araclar';
+    include 'araclar/araclar.php';
+    break;
+
+    case 'arizalar';
+    include 'arizalar/arizalar.php';
     break;
 
     default;
