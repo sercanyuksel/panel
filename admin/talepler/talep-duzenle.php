@@ -28,35 +28,42 @@ else $solved_date="*******";
 $sth=$conn->prepare("SELECT * from cars WHERE id=?");
 $sth->execute(array($request['car_id']));
 $selected_car=$sth->fetch(PDO::FETCH_ASSOC);
+if($request['status']==0){
+    $cur_status="Açık Talep";
+}
+if($request['status']==1){
+    $cur_status="İşlemde";
+}
+if($request['status']==2){
+    $cur_status="Kapalı Talep";
+}
 if($_POST)
 {
     $dt=new DateTime();
-    $created_at = $dt->format('Y-m-d H:i:s');
-    $desc=$_POST['desc'];
-    $car_id=$_POST['car_id'];
-    $creator_id=$_SESSION['user_id'];
-    $camera_id=$_POST['camera'];
-    if(empty($desc) || empty($car_id))
+    $solved_at = $dt->format('Y-m-d H:i:s');
+    $result=$_POST['result'];
+    $response=$_POST['resp'];
+    if($result!=0 && $result!=1)
     {
         echo '
       
         <div class="row justify-content-center">
         <div class="col-md-12">
         <div class="alert alert-danger" style="padding:60px;">
-        <h1><i class="fa fa-warning"></i> Açıklama ve Araç Bölümlerini Boş Bırakamazsanız.</h1><br/>
+        <h1><i class="fa fa-warning"></i> Talep Sonucunu Boş Bırakamazsanız.</h1><br/>
         Yönlendiriliyorsunuz...
         </div>
         </div>
         </div>
         	
         ';
-     header("Refresh:2; url=index.php?islem=talep-ekle");
+     header("Refresh:2; url=index.php?islem=talep-duzenle&id=$id");
     }
     else
     {
-        $sth=$conn->prepare("INSERT INTO requests (car_id,description,created_at,creator_id,status,camera_id) VALUES (?,?,?,?,?,?)");
+        $sth=$conn->prepare("UPDATE requests SET solved_at=?,response=?,response_status=?,status=?  WHERE id=?"); 
         $sth=$sth->execute(array(
-            $car_id,$desc,$created_at,$creator_id,0,$camera_id
+            $solved_at,$response,$result,2,$id
         ));
         if($sth)
         {
@@ -65,7 +72,7 @@ if($_POST)
               <div class="row justify-content-center">
               <div class="col-md-12">
               <div class="alert alert-success" style="padding:60px;">
-              <h1><i class="fa fa-check-circle-o"></i> Talep Ekleme Başarılı .</h1><br/>
+              <h1><i class="fa fa-check-circle-o"></i> Talep Sonlandırma Başarılı .</h1><br/>
               Yönlendiriliyorsunuz...
               </div>
               </div>
@@ -101,14 +108,14 @@ else{
 
             <div class="card">
                 <div class="card-header">
-                    <strong>Talep Ekle</strong>                
+                    <strong>Talep Düzenle</strong>                
                 </div>
                 <div class="card-body">
                 <form method="POST">
 
                     <div class="form-group">
                         <label for="company">Talebin Durumu :</label>
-                        <input type="text" disabled value="<?=$request['status']?>" />
+                        <input type="text" disabled value="<?=$cur_status?>" />
                     </div>
 
                     <div class="form-group">
@@ -126,6 +133,31 @@ else{
                     <div class="form-group">
                         <label for="company">Talebi Açan :</label>
                         <input type="text" disabled value="<?=$creator['name']?> <?=$creator['surname']?>" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Görüntüsü İstenen Cameralar :</label>
+                        <select multiple disabled class="form-control" name="result" id="result"> 
+                        <?php if(strlen($request['camera_id'])>0){
+                            $cameras=explode("-",$request['camera_id']);
+                            foreach($cameras as $camera){
+                                $sth=$conn->prepare("SELECT * from camera_types WHERE id=?");
+                                $sth->execute(array($camera));
+                                $cur_camera=$sth->fetch(PDO::FETCH_ASSOC);
+                                echo '<option>'.$cur_camera['camera'].'</option>';
+                            }
+                        } ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Başlangıç Saati :</label>
+                        <input type="text" disabled value="<?=$request['start_time']?>" />                        
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Bitiş Saati :</label>
+                        <input type="text" disabled value="<?=$request['stop_time']?>" />                        
                     </div>
 
                     <div class="form-group">
@@ -149,15 +181,25 @@ else{
                     </div>
 
                     <div class="form-group">
-                        <label for="desc">Talep Cevap :</label>
-                        <textarea  rows="4" name="resp" class="form-control" id="desc"><?=$request['response']?></textarea>
+                        <label for="company">Talep Sonucu :</label>
+                        <select <?php if($request['status']==2)echo'disabled'; ?> class="form-control" name="result" id="result"> 
+                            <option value="0" <?php if($request['response_status']==0) echo'selected="selected"';?>>Olumsuz</option>
+                            <option value="1" <?php if($request['response_status']==1) echo'selected="selected"';?>>Olumlu</option>                      
+                        </select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="desc">Talep Cevap :</label>
+                        <textarea  rows="4" <?php if($request['status']==2)echo'disabled'; ?>  name="resp" class="form-control" id="desc"><?=$request['response']?></textarea>
+                    </div>
+
+                    <input type="hidden"  value="<?=$id?>" id="req_id"/>
+                    <input type="hidden"  value="<?=$_SESSION['user_id']?>" id="ses_id"/>
 
                     <div class="row">
                         <div class="col-6">
-                            <button type="submit" class="btn btn-primary px-4">Ekle</button>
-                            <button type="submit" class="btn btn-success px-4">İşleme Al</button>
-                            <button type="submit" class="btn btn-danger px-4">Cevapla</button>
+                            <button id="handle" type="button"  class="btn btn-success px-4" <?php if($request['status']==1 || $request['status']==2) {echo 'disabled title="Zaten İşlemde veya Talep Sonlanmış"';}?>>İşleme Al</button>
+                            <button type="submit" class="btn btn-danger px-4" <?php if($request['status']!=1 || $request['status']==2) {echo 'disabled title="Önce İşleme Alın veya Zaten İşleme Alınmış veya Talep Kapanmış."';}?>>Cevapla</button>
                         </div>
                     </div>
 

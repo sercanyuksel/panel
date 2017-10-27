@@ -9,7 +9,13 @@ if($_POST)
     $desc=$_POST['desc'];
     $car_id=$_POST['car_id'];
     $creator_id=$_SESSION['user_id'];
-    $camera_id=$_POST['camera'];
+    $camera_id="";
+    foreach($_POST['camera'] as $cam){
+        $camera_id=$camera_id.'-'.$cam;
+    }
+    $camera_id=substr($camera_id,1);
+    $start_time=$_POST['start_time'];
+    $stop_time=$_POST['stop_time'];
     if(empty($desc) || empty($car_id))
     {
         echo '
@@ -28,9 +34,9 @@ if($_POST)
     }
     else
     {
-        $sth=$conn->prepare("INSERT INTO requests (car_id,description,created_at,creator_id,status,camera_id) VALUES (?,?,?,?,?,?)");
+        $sth=$conn->prepare("INSERT INTO requests (car_id,description,created_at,creator_id,status,camera_id,start_time,stop_time) VALUES (?,?,?,?,?,?,?,?)");
         $sth=$sth->execute(array(
-            $car_id,$desc,$created_at,$creator_id,0,$camera_id
+            $car_id,$desc,$created_at,$creator_id,0,$camera_id,$start_time,$stop_time
         ));
         if($sth)
         {
@@ -88,6 +94,16 @@ else{
                             <option value="<?=$car['id']?>"><?=$car['code']?></option>
                         <?php } ?>                        
                         </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="desc">Başlangıç Zamanı :</label>
+                        <input type="time" name="start_time"  class="form-control" id="desc"></input>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="desc">Bitiş Zamanı :</label>
+                        <input type="time" name="stop_time"  class="form-control" id="desc"></input>
                     </div>
 
                     <div class="form-group">
