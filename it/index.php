@@ -93,6 +93,22 @@ switch($page){
     default;
     include 'talepler/talepler.php';
     break;
+
+    case 'arizalar';
+    include 'arizalar/arizalar.php';
+    break;
+    
+    case 'ariza-ekle';
+    include 'arizalar/ariza-ekle.php';
+    break;
+
+    case 'ariza-sil';
+    include 'arizalar/ariza-sil.php';
+    break;
+    
+    case 'ariza-duzenle';
+    include 'arizalar/ariza-duzenle.php';
+    break;
     }
 ?>    
         </main>
