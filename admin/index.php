@@ -40,6 +40,10 @@ if(!$_SESSION['user']||$_SESSION['authority']!=1)
 
 switch($page){
     
+    case 'cikis';
+    include 'cikis.php';
+    break;
+
     case 'araclar';
     include 'araclar/araclar.php';
     break;
@@ -54,6 +58,22 @@ switch($page){
 
     case 'arac-sil';
     include 'araclar/arac-sil.php';
+    break;
+
+    case 'arizalar';
+    include 'arizalar/arizalar.php';
+    break;
+    
+    case 'ariza-ekle';
+    include 'arizalar/ariza-ekle.php';
+    break;
+
+    case 'ariza-duzenle';
+    include 'arizalar/ariza-duzenle.php';
+    break;
+
+    case 'ariza-sil';
+    include 'arizalar/ariza-sil.php';
     break;
     
     case 'arac-duzenle';

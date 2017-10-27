@@ -93,7 +93,8 @@ else{
                         <?php foreach($cars as $car) { ?>
                             <option value="<?=$car['id']?>"><?=$car['code']?></option>
                         <?php } ?>                        
-                        </select>
+                        </select><br/>
+                        <input type="text" style="width:20%;" class="form-control" id="filterCar" placeholder="Araç Filtrele"></input>
                     </div>
                     
                     <div class="form-group">

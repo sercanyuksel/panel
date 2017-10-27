@@ -41,7 +41,7 @@
                     </div>
                     <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profil</a>
                     <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Şifre Değiştir</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Çıkış Yap</a>
+                    <a class="dropdown-item" href="index.php?islem=cikis"><i class="fa fa-lock"></i> Çıkış Yap</a>
                 </div>
             </li>
         </ul>

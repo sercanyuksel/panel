@@ -20,3 +20,17 @@ $("#handle").click(function(e){
         window.location.href='index.php?islem=talepler';
     });
 });
+
+$("#filterCar").keyup(function () {
+    var valthis = $(this).val().toLowerCase();
+
+    $("select#car_id>option").each(function () {
+        var text = $(this).text().toLowerCase();
+        if (text.indexOf(valthis) !== -1) {
+            $(this).show(); $(this).prop("selected",true);
+        }
+        else {
+            $(this).hide();
+        }
+    });
+});
