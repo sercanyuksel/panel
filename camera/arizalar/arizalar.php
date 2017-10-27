@@ -1,5 +1,13 @@
 <?php
-$drivers=$conn->query("SELECT * from drivers",PDO::FETCH_ASSOC);
+$car_troubles=$conn->query("SELECT * from car_troubles",PDO::FETCH_ASSOC);
+
+$sth=$conn->prepare("SELECT * from cars");
+$sth->execute(array());
+$cars=$sth->fetchAll(PDO::FETCH_ASSOC);
+
+$sth=$conn->prepare("SELECT * from drivers");
+$sth->execute(array());
+$drivers=$sth->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <div class="container-fluid">
@@ -7,34 +15,33 @@ $drivers=$conn->query("SELECT * from drivers",PDO::FETCH_ASSOC);
                     <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <i class="fa fa-align-justify"></i> Şöförler
+                                    <i class="fa fa-align-justify"></i> Arızalar
                                 </div>
                                 <div class="card-body">
                                     <table class="table table-bordered table-striped table-sm">
                                         <thead>
                                             <tr>
-                                                <th>Ad</th>
-                                                <th>Soyad</th>
-                                                <th>Tc NO</th>
-                                                <th>Doğum Tarihi</th>
-                                                <th>Telefon</th>
-                                                <th>Adres</th>
-                                                <th>İşlemler</th>
+                                                <th>Araç Kodu</th>
+                                                <th>İhbar Saati</th>
+                                                <th>Müdahale Saati</th>
+                                                <th>Müdahale Yeri</th>
+                                                <th>Dönüş Saati</th>
+                                                <th>Araç Şoförü</th>
+                                                <th>Talimat Veren</th>
+                                                <th>Arıza Nedeni</th>
+                                                <th>Sonuç</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php 
-                                        if($drivers->rowCount()>0){
-                                        foreach($drivers as $driver){ 
+                                        if($car_troubles->rowCount()>0){
+                                        foreach($car_troubles as $car_trouble){ 
                                             ?>
                                            <tr>
-                                                <td><a href="index.php?islem=sofor-duzenle&id=<?=$driver['id']?>"><?=$driver['name']?></a></td>
-                                                <td><?=$driver['surname']?></td>
-                                                <td><?=$driver['no']?></td>
-                                                <td><?=$driver['birthdate']?></td>
-                                                <td><?=$driver['phone']?></td>
-                                                <td><?=$driver['adress']?></td>
-                                                <td class="text-center"><a  href="index.php?islem=sofor-duzenle" title="incele"><i class="icon-magnifier"></i></a> | <a id="delete" href="index.php?islem=sofor-sil&id=<?=$driver['id']?>" title="Sil"><i class="icon-close"></i></a></td>
+                                                <td><a href="index.php?islem=ariza-duzenle&id=<?=$car_trouble['id']?>"><?=$car_trouble['name']?></a></td>
+                                                <td><?=$car_trouble['code']?></td>
+                                                <td><?=$car_trouble['notice_date']?></td> 
+                                                <td class="text-center"><a  href="index.php?islem=ariza-duzenle" title="incele"><i class="icon-magnifier"></i></a> | <a id="delete" href="index.php?islem=ariza-sil&id=<?=$car_trouble['id']?>" title="Sil"><i class="icon-close"></i></a></td>
                                            </tr>
                                         <?php }}else{
                                            echo' Kayıt Bulunamadı.';
@@ -67,4 +74,4 @@ $drivers=$conn->query("SELECT * from drivers",PDO::FETCH_ASSOC);
 
  
 
-            <script src="soforler/handle.js"></script>
+            <script src="arizalar/handle.js"></script>
