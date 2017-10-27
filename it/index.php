@@ -3,7 +3,7 @@
  header("content-type: text/html; charset=utf-8");
  require('include/ayar.php');
  session_start();
-if(!$_SESSION['user']||$_SESSION['authority']!=1)
+if(!$_SESSION['user']||$_SESSION['authority']!=3)
 {
     header('Location:../');
 }
@@ -39,7 +39,25 @@ if(!$_SESSION['user']||$_SESSION['authority']!=1)
             <?php
 
 switch($page){
+    case 'araclar';
+    include 'araclar/araclar.php';
+    break;
     
+    case 'arac-ekle';
+    include 'araclar/arac-ekle.php';
+    break;
+
+    case 'arac-kamera';
+    include 'araclar/arac-kamera.php';
+    break;
+
+    case 'arac-sil';
+    include 'araclar/arac-sil.php';
+    break;
+    
+    case 'arac-duzenle';
+    include 'araclar/arac-duzenle.php';
+    break;   
     case 'talepler';
     include 'talepler/talepler.php';
     break;

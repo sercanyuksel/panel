@@ -1,15 +1,15 @@
 <?php
-// post varsa
-//selam
-//ceren keşke bir işi becerebilse
-//dinçer neden malak
+$sth=$conn->prepare("SELECT * from cars");
+$sth->execute();
+$cars=$sth->fetchAll();
 if($_POST)
 {
     $dt=new DateTime();
-	$created_at = $dt->format('Y-m-d H:i:s');
+    $created_at = $dt->format('Y-m-d H:i:s');
     $desc=$_POST['desc'];
     $car_id=$_POST['car_id'];
     $creator_id=$_SESSION['user_id'];
+    $camera_id=$_POST['camera'];
     if(empty($desc) || empty($car_id))
     {
         echo '
@@ -28,9 +28,9 @@ if($_POST)
     }
     else
     {
-        $sth=$conn->prepare("INSERT INTO requests (car_id,description,created_at,creator_id,status) VALUES (?,?,?,?,?)");
+        $sth=$conn->prepare("INSERT INTO requests (car_id,description,created_at,creator_id,status,camera_id) VALUES (?,?,?,?,?,?)");
         $sth=$sth->execute(array(
-            $car_id,$desc,$created_at,$creator_id,0
+            $car_id,$desc,$created_at,$creator_id,0,$camera_id
         ));
         if($sth)
         {
@@ -82,10 +82,11 @@ else{
                    
                     <div class="form-group">
                         <label for="company">Araç :</label>
-                        <select class="form-control" name="car_id">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>                        
+                        <select class="form-control" name="car_id" id="car_id">
+                        <option value="-1" disabled selected="selected">Araç Seçin</option>
+                        <?php foreach($cars as $car) { ?>
+                            <option value="<?=$car['id']?>"><?=$car['code']?></option>
+                        <?php } ?>                        
                         </select>
                     </div>
 
@@ -93,9 +94,7 @@ else{
                         <label for="desc">Açıklama :</label>
                         <textarea rows="4" name="desc" class="form-control" id="desc" placeholder="Talep Açıklamasını Girin."></textarea>
                     </div>
-
-                
-
+  
                     <div class="row">
                         <div class="col-6">
                             <button type="submit" class="btn btn-primary px-4">Ekle</button>
@@ -109,4 +108,6 @@ else{
         </div>
     </div>
 </div>
-<?php } ?>
+<script type="text/javascript" src="talepler/handle.js"></script>
+<?php }
+?>
