@@ -1,36 +1,36 @@
 <?php
-// post varsa
-//selam
-//ceren keşke bir işi becerebilse
-//dinçer neden malak
+$id=$_GET['id'];
+$sth=$conn->prepare("SELECT * from area WHERE id=?");
+$sth->execute(array(
+    $id
+));
+$driver=$sth->fetch(PDO::FETCH_ASSOC);
 if($_POST)
 {
-    $dt=new DateTime();
-	$created_at = $dt->format('Y-m-d H:i:s');
-    $desc=$_POST['desc'];
-    $car_id=$_POST['car_id'];
-    $creator_id=$_SESSION['user_id'];
-    if(empty($desc) || empty($car_id))
+    $code=$_POST['code'];
+    $name=$_POST['name'];
+
+    if(empty($code) || empty($name))
     {
         echo '
       
         <div class="row justify-content-center">
         <div class="col-md-12">
         <div class="alert alert-danger" style="padding:60px;">
-        <h1><i class="fa fa-warning"></i> Açıklama ve Araç Bölümlerini Boş Bırakamazsanız.</h1><br/>
+        <h1><i class="fa fa-warning"></i> Bölge kodu ve Bölge adını Boş Bırakamazsanız.</h1><br/>
         Yönlendiriliyorsunuz...
         </div>
         </div>
         </div>
         	
         ';
-     header("Refresh:2; url=index.php?islem=talep-ekle");
+     header("Refresh:2; url=index.php?islem=bolge-duzenle");
     }
     else
     {
-        $sth=$conn->prepare("INSERT INTO requests (car_id,description,created_at,creator_id,status) VALUES (?,?,?,?,?)");
+        $sth=$conn->prepare("UPDATE area SET code=?,name=? WHERE id=?");
         $sth=$sth->execute(array(
-            $car_id,$desc,$created_at,$creator_id,0
+            $code,$name,$id
         ));
         if($sth)
         {
@@ -39,14 +39,14 @@ if($_POST)
               <div class="row justify-content-center">
               <div class="col-md-12">
               <div class="alert alert-success" style="padding:60px;">
-              <h1><i class="fa fa-check-circle-o"></i> Talep Ekleme Başarılı .</h1><br/>
+              <h1><i class="fa fa-check-circle-o"></i> Bölge Düzenleme Başarılı .</h1><br/>
               Yönlendiriliyorsunuz...
               </div>
               </div>
               </div>
                   
               ';
-           header("Refresh:2; url=index.php?islem=talepler");
+           header("Refresh:2; url=index.php?islem=bolgeler");
         }
         else
         {
@@ -62,12 +62,11 @@ if($_POST)
               </div>
                   
               ';
-           header("Refresh:2; url=index.php?islem=talep-ekle");
+           header("Refresh:2; url=index.php?islem=bolge-duzenle");
         }
     }
     
-}
-else{
+}else{
 ?>
 <div class="container-fluid">
     <div class="row">
@@ -75,35 +74,32 @@ else{
 
             <div class="card">
                 <div class="card-header">
-                    <strong>Talep Ekle</strong>                
+                    <strong>Bölge Düzenle</strong>                
                 </div>
                 <div class="card-body">
-                <form method="POST">
-                   
+                <form METHOD="POST">
+
                     <div class="form-group">
-                        <label for="company">Araç :</label>
-                        <select class="form-control" name="car_id">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>                        
-                        </select>
+                        <label for="company">Bölge Kodu :</label>
+                        <input type="text" name="code" value="<?=$driver['code']?>" class="form-control" id="code">
                     </div>
 
                     <div class="form-group">
-                        <label for="desc">Açıklama :</label>
-                        <textarea rows="4" name="desc" class="form-control" id="desc" placeholder="Talep Açıklamasını Girin."></textarea>
+                        <label for="company">Bölge Adı :</label>
+                        <input type="text" name="name" value="<?=$driver['name']?>" class="form-control" id="name" >
                     </div>
 
-                
 
                     <div class="row">
                         <div class="col-6">
-                            <button type="submit" class="btn btn-primary px-4">Ekle</button>
+                            <button type="submit" class="btn btn-primary px-4">Düzenle</button>
                         </div>
                     </div>
-
-                </form>
+                    </form>
                 </div>
+                
+               
+
             </div>
 
         </div>

@@ -49,9 +49,9 @@ if($_POST)
     }
     else
     {
-        $sth=$conn->prepare("UPDATE car_troubles SET name=?,surname=?,no=?,phone=?,adress=? WHERE id=?");
+        $sth=$conn->prepare("UPDATE car_troubles SET code=?,surname=?,no=?,phone=?,adress=? WHERE id=?");
         $sth=$sth->execute(array(
-            $ad,$soyad,$tc,$telefon,$adres,$id
+            $arac_kodu,$soyad,$tc,$telefon,$adres,$id
         ));
         if($sth)
         {

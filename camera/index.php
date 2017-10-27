@@ -44,14 +44,6 @@ switch($page){
     include 'talepler/talepler.php';
     break;
     
-    case 'talep-ekle';
-    include 'talepler/talep-ekle.php';
-    break;
-
-    case 'talep-sil';
-    include 'talepler/talep-sil.php';
-    break;
-    
     case 'talep-duzenle';
     include 'talepler/talep-duzenle.php';
     break;

@@ -1,28 +1,26 @@
 <?php
-$areas=$conn->query("SELECT * from area",PDO::FETCH_ASSOC);
+$types=$conn->query("SELECT * from camera_types",PDO::FETCH_ASSOC);
 ?>
 <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <i class="fa fa-align-justify"></i> Bölgeler
+                                    <i class="fa fa-align-justify"></i> Kamera Tipleri
                                 </div>
                                 <div class="card-body">
                                     <table class="table table-bordered table-striped table-sm">
                                         <thead>
                                             <tr>
-                                                <th>Bölge Kodu</th>
-                                                <th>Bölge Adı</th>
+                                                <th>Kamera Tipi</th>
                                                 <th>İşlemler</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <?php foreach($areas as $area){?>
+                                        <?php foreach($types as $type){?>
                                            <tr>
-                                                <td><a href="index.php?islem=bolge-duzenle&id=<?=$area['id']?>"><?=$area['code']?></a></td>
-                                                <td><?=$area['name']?></td>
-                                                <td class="text-center"><a href="index.php?islem=bolge-duzenle&id=<?=$area['id']?>" title="incele"><i class="icon-magnifier"></i></a></td>
+                                                <td><a href="index.php?islem=kamera-duzenle&id=<?=$type['id']?>"><?=$type['camera']?></a></td>
+                                                <td class="text-center"><a href="index.php?islem=kamera-duzenle&id=<?=$type['id']?>" title="incele"><i class="icon-magnifier"></i></a>| <a id="delete" href="index.php?islem=kamera-sil&id=<?=$type['id']?>" title="Sil"><i class="icon-close"></i></a></td>
                                            </tr>
                                         <?php } ?>
                                         </tbody>
@@ -47,7 +45,7 @@ $areas=$conn->query("SELECT * from area",PDO::FETCH_ASSOC);
                                 </div>
                          
                             </div>
-                            </div>
+                         </div>
                     </div>
             </div>
 

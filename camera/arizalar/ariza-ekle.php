@@ -1,34 +1,31 @@
 <?php
 
-$sth=$conn->prepare("SELECT * from cars");
-$sth->execute(array());
+$sth=$conn->query("SELECT * from cars");
 $cars=$sth->fetchAll(PDO::FETCH_ASSOC);
 
-$sth=$conn->prepare("SELECT * from drivers");
-$sth->execute(array());
+$sth=$conn->query("SELECT * from drivers");
 $drivers=$sth->fetchAll(PDO::FETCH_ASSOC);
 
+$sth=$conn->query("SELECT * from troubles");
+$troubles=$sth->fetchAll(PDO::FETCH_ASSOC);
 
 if($_POST)
 {
     $arac_kodu=$_POST['arac_kodu'];
-    $ihbar_tarihi=$_POST['ihbar_tarihi'];
-    $mudahale_saati=$_POST['mudahale_saati'];
-    $mudahale_yeri=$_POST['mudahale_yeri'];
-    $donus_saati=$_POST['donus_saati'];
-    $arac_soforu=$_POST['arac_soforu'];
-    $talimat_veren=$_POST['talimat_veren'];
-    $ariza_nedeni=$_POST['ariza_nedeni'];
-    $sonuc=$_POST['sonuc'];
+    $aciklama=$_POST['aciklama'];
+    $surucu_adi=$_POST['surucu_adi'];
+    $konu=$_POST['konu'];
+    $ariza_tarihi=$_POST['ariza_tarihi'];
+    $ariza_tipi=$_POST['ariza_tipi'];
 
-    if(empty($arac_kodu))
+    if(empty($arac_kodu) || empty($konu))
     {
         echo '
       
         <div class="row justify-content-center">
         <div class="col-md-12">
         <div class="alert alert-danger" style="padding:60px;">
-        <h1><i class="fa fa-warning"></i> Arac Kodunu Boş Bırakamazsanız.</h1><br/>
+        <h1><i class="fa fa-warning"></i> Araç Kodu veya Konu Boş Bırakamazsanız.</h1><br/>
         Yönlendiriliyorsunuz...
         </div>
         </div>
@@ -39,9 +36,9 @@ if($_POST)
     }
     else
     {
-        $sth=$conn->prepare("INSERT INTO car_troubles (notice_date) VALUES (?)");
+        $sth=$conn->prepare("INSERT INTO car_troubles (car_id,description,driver_id,title,trouble_date,trouble_id) VALUES (?,?,?,?,?,?)");
         $sth=$sth->execute(array(
-            $ihbar_tarihi
+            $arac_kodu,$aciklama,$surucu_adi,$konu,$ariza_tarihi,$ariza_tipi
         ));
         if($sth)
         {
@@ -91,39 +88,51 @@ else{
                 <div class="card-body">
                 <form method="POST">
 
-                <div class="form-group">
-                <label for="company">Araç Kodu :</label>
-                <select name="arac_kodu" class="form-control" id="company">
-                <option value="seciniz">Araç Kodu Seçiniz...</option>
-                <?php foreach($cars as $car) {
-                ?>
-                <option value="<?=$car['id']?>">
-                <?=$car['code']?>
-                </option>
-                <?php }
-                ?>
+            <div class="form-group">
+                <label for="company">Araç Kodu :</label><br>
+                <select name="arac_kodu" class="form-control col-sm-12 col-md-6">
+                <option disabled selected="selected"> Araç kodu seçiniz... </option>
+                <?php foreach($cars as $car){ ?>
+                <option value="<?=$car['id']?>"><?=$car['code']?></option>
+                <?php } ?>
                 </select>
-            </div>
+            </div> 
+               
 
-             <div class="form-group">
-                    <label for="company">Araç Şoförü :</label>
-                    <select name="arac_soforu" class="form-control" id="company">
-                    <option value="seciniz">Araç Şoförü Seçiniz...</option>
-                    <?php foreach($drivers as $driver) {
-                    ?>
-                    <option value="<?=$driver['id']?>">
-                    <?=$driver['name']?>
-                    </option>
-                    <?php }
-                    ?>
+                    <div class="form-group">
+                    <label for="company">Sürücü Adı :</label><br> 
+                    <select name="surucu_adi" class="form-control col-sm-12 col-md-6">
+                    <option disabled selected="selected"> Sürücü adı seçiniz... </option>
+                    <?php foreach($drivers as $driver){ ?>
+                    <option value="<?=$driver['id']?>"><?=$driver['name']?></option>
+                    <?php } ?>
                     </select>
-                </div>
-                   
-             <div class="form-group">
-                <label for="company">İhbar Tarihi :</label>
-                <input type="date" name="ihbar_tarihi" class="form-control col-sm-12 col-md-4" id="company" placeholder="İhbar tarihini Giriniz.">
-            </div>
-  
+                </div> 
+
+                    <div class="form-group">
+                        <label for="company">Arıza Tarihi :</label>
+                        <input type="date" name="ariza_tarihi" class="form-control col-sm-12 col-md-6" id="company" placeholder="Arıza Tarihini Giriniz.">
+                    </div>
+
+                    <div class="form-group">
+                    <label for="company">Arıza Tipi :</label><br>
+                    <select name="ariza_tipi" class="form-control col-sm-12 col-md-6">
+                    <option disabled selected="selected"> Arıza tipi seçiniz... </option>
+                    <?php foreach($troubles as $trouble){ ?>
+                    <option value="<?=$trouble['id']?>"><?=$trouble['trouble']?></option>
+                    <?php } ?>
+                    </select>
+                </div> 
+
+                    <div class="form-group">
+                        <label for="street">Konu :</label>
+                        <input type="text" name="konu" class="form-control" id="street" placeholder="Konu Giriniz.">
+                    </div>
+ 
+                    <div class="form-group">
+                        <label for="aciklama">Açıklama :</label>
+                        <textarea rows="4" name="aciklama" class="form-control" id="aciklama" placeholder="Talep Açıklamasını Girin."></textarea>
+                    </div>
 
                     <div class="form-group">
                        
