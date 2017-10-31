@@ -132,7 +132,7 @@ else{
  
                     <div class="form-group">
                         <label for="aciklama">Açıklama :</label>
-                        <textarea rows="4" name="aciklama" class="form-control" id="aciklama" placeholder="Talep Açıklamasını Girin."></textarea>
+                        <textarea rows="4" name="aciklama" class="form-control" id="aciklama" placeholder="Arıza Açıklamasını Girin."></textarea>
                     </div>
 
                   

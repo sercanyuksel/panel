@@ -160,6 +160,23 @@ switch($page){
     include 'soforler/sofor-duzenle.php';
     break;
 
+    
+    case 'kullanicilar';
+    include 'kullanicilar/kullanicilar.php';
+    break;
+    
+    case 'kullanici-ekle';
+    include 'kullanicilar/kullanici-ekle.php';
+    break;
+
+    case 'kullanici-sil';
+    include 'kullanicilar/kullanici-sil.php';
+    break;
+    
+    case 'kullanici-duzenle';
+    include 'kullanicilar/kullanici-duzenle.php';
+    break;
+
     case 'ariza-tipleri';
     include 'ariza-tip/ariza-tipleri.php';
     break;
