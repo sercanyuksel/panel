@@ -1,8 +1,5 @@
 <?php
-// post varsa
-//selam
-//ceren keşke bir işi becerebilse
-//dinçer neden malak
+
 if($_POST)
 {
     $ad=$_POST['ad'];
@@ -26,7 +23,7 @@ if($_POST)
         </div>
         	
         ';
-     header("Refresh:2; url=index.php?islem=sofor-ekle");
+     header("Refresh:2; url=index.php?islem=kullanici-ekle");
     }
     else
     {

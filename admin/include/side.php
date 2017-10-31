@@ -55,11 +55,20 @@
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-puzzle"></i>Ek İşlemler</a>
                         <ul class="nav-dropdown-items">
+
                             <li class="nav-item">
-                            <a class="nav-link" href="index.php?islem=sofor-ekle"><i class="icon-star"></i>Şöför Ekle</a>
+                            <a class="nav-link" href="index.php?islem=kullanici-ekle"><i class="icon-star"></i>Kullanıcı Ekle</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php?islem=kullanicilar"><i class="icon-star"></i>Kullanıcı Listesi</a>
+                            </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link" href="index.php?islem=sofor-ekle"><i class="icon-star"></i>Şoför Ekle</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="index.php?islem=soforler"><i class="icon-star"></i>Şöför Listesi</a>
+                                <a class="nav-link" href="index.php?islem=soforler"><i class="icon-star"></i>Şoför Listesi</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="index.php?islem=kamera-ekle"><i class="icon-star"></i>Kamera Tipi Ekle</a>
