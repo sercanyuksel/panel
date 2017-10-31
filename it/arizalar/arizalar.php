@@ -22,30 +22,31 @@ $drivers=$sth->fetchAll(PDO::FETCH_ASSOC);
                                         <thead>
                                             <tr>
                                                 <th>Araç Kodu</th>
-                                                <th>İhbar Saati</th>
-                                                <th>Müdahale Saati</th>
-                                                <th>Müdahale Yeri</th>
-                                                <th>Dönüş Saati</th>
                                                 <th>Araç Şoförü</th>
-                                                <th>Talimat Veren</th>
-                                                <th>Arıza Nedeni</th>
-                                                <th>Sonuç</th>
+                                                <th>Arıza Tarihi</th>
+                                                <th>Arıza Tipi</th>
+                                                <th>Konu</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <?php 
-                                        if($car_troubles->rowCount()>0){
-                                        foreach($car_troubles as $car_trouble){ 
+                                        <?php foreach($car_troubles as $car_trouble){
+                                            $oDate = new DateTime($car_trouble['trouble_date']);
+                                            $trouble_date = $oDate->format("d-m-Y");
+                                            $sth=$conn->prepare("SELECT * from cars WHERE id=?");
+                                            $sth->execute(array($car_trouble['car_id']));
+                                            $car=$sth->fetch(PDO::FETCH_ASSOC);
+                                            $sth=$conn->prepare("SELECT * from drivers WHERE id=?");
+                                            $sth->execute(array($car_trouble['driver_id']));
+                                            $driver=$sth->fetch(PDO::FETCH_ASSOC);
                                             ?>
-                                           <tr>
-                                                <td><a href="index.php?islem=ariza-duzenle&id=<?=$car_trouble['id']?>"><?=$car_trouble['name']?></a></td>
-                                                <td><?=$car_trouble['code']?></td>
-                                                <td><?=$car_trouble['notice_date']?></td> 
-                                                <td class="text-center"><a  href="index.php?islem=ariza-duzenle" title="incele"><i class="icon-magnifier"></i></a> | <a id="delete" href="index.php?islem=ariza-sil&id=<?=$car_trouble['id']?>" title="Sil"><i class="icon-close"></i></a></td>
-                                           </tr>
-                                        <?php }}else{
-                                           echo' Kayıt Bulunamadı.';
-                                        } ?>
+                                            <tr>
+                                        <td><?=$car['code']?></td>
+                                        <td><?=$driver['name']?> <?=$driver['surname']?></td>    
+                                        <td><?=$trouble_date?></td>
+                                        <td><?=$car_trouble['title']?></td>
+                                        <td><?=$car_trouble['description']?></td>
+                                        </tr>
+                                        <?php }?>
                                         </tbody>
                                     </table>
                                     <nav>
