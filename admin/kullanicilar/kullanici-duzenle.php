@@ -5,12 +5,18 @@ $sth->execute(array(
     $id
 ));
 $user=$sth->fetch(PDO::FETCH_ASSOC);
+
+$sth=$conn->prepare("SELECT * from type");
+$sth->execute();
+$type=$sth->fetchAll(PDO::FETCH_ASSOC);
+
 if($_POST)
 {
     $ad=$_POST['ad'];
     $soyad=$_POST['soyad'];
     $kullanici_adi=$_POST['kullanici_adi'];
     $sifre=$_POST['sifre'];
+    $kullanici_tipi=$_POST['kullanici_tipi'];
  
 
     if(empty($kullanici_adi) || empty($sifre) || empty($kullanici_adi) || empty($sifre))
@@ -31,9 +37,9 @@ if($_POST)
     }
     else
     {
-        $sth=$conn->prepare("UPDATE users SET name=?,surname=?,username=?,password=? WHERE id=?");
+        $sth=$conn->prepare("UPDATE users SET name=?,surname=?,username=?,password=?,type_id=? WHERE id=?");
         $sth=$sth->execute(array(
-            $ad,$soyad,$kullanici_adi,$sifre
+            $ad,$soyad,$kullanici_adi,$sifre,$kullanici_tipi
         ));
         if($sth)
         {
@@ -100,6 +106,19 @@ if($_POST)
                         <label for="company">Şifre :</label>
                         <input type="password" name="sifre" value="<?=$user['password']?>" class="form-control" id="company" >
                     </div>
+
+                    <div class="form-group">
+                    <label for="company">Kullanıcı Tipi :</label>
+                    <select name="kullanici_tipi" class="form-control" id="company">
+                    <?php foreach($type as $type) {
+                    ?>
+                    <option <?php if($users['type_id']==$type['id']) echo 'selected="selected"'; ?> value="<?=$type['id']?>">
+                    <?=$type['title']?>
+                    </option>
+                    <?php }
+                    ?>
+                    </select>
+                </div>
                   
                     <div class="row">
                         <div class="col-6">
